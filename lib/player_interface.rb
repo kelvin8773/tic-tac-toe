@@ -1,12 +1,17 @@
 class Player
-    attr_accessor :position
+    attr_accessor :positions
     attr_reader :character, :name
 
-    def start_game()
+    def initialize(char, name,positions)
+        @char = char
+        @name = name
+        @positions = positions
+    end
+
+    def play_game(positions)
      puts "Please enter your position (1 - 9) :"
      pos = gets.chomp
-     position[pos] = "X"
-     puts "Please enter your position (1 - 9) :"  
-      pos = gets.chomp 
-     position[pos] = “O”
+     pos = pos.to_i - 1
+     positions[pos] = @char
+    end
 end

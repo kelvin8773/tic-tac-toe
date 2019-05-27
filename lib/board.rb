@@ -1,11 +1,11 @@
 class GameBoard
-    attr_accesor :positions
+    attr_accessor :positions
 
-    def initialize()
-        @positions = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+    def initialize(positions)
+        @positions = positions
     end
 
-    def display()
+    def display(positions)
         puts "\t   #{positions[6]}| #{positions[7]} | #{positions[8]}"
         puts "\t ---|---|---"
         puts "\t   #{positions[3]}| #{positions[4]} | #{positions[5]}"
@@ -27,6 +27,3 @@ end
 
    
 
-game1 = GameBoard.new 
-
-game1.display
