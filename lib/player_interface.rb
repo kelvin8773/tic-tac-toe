@@ -9,7 +9,7 @@ class Player
     end
 
     def play_game(positions)
-     puts "Please enter your position (1 - 9) :"
+     puts "#{name}, Please enter your position (1 - 9) :"
      pos = gets.chomp
      pos = pos.to_i - 1
      positions[pos] = @char
