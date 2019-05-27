@@ -22,6 +22,9 @@ class GameBoard
         @positions[0..8].all?{|x| x.instance_of?(String)}
     end
 
+     def is_fulled?(num)
+        @positions[num] == "X" || "O" == @positions[num]
+    end
 
 end
 
