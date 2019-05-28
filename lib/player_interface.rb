@@ -28,8 +28,17 @@ class Player
      end
     end
 
+    def wins?(line)
+    line & @positions == line
+    end
+
     def who_wins?
-        
+        Player.each{|player|
+            @lines.each{|line|
+                return Player.name() if Player.wins?(line)
+            }
+        }
+        false
     end
         
-end
+end 
