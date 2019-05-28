@@ -16,6 +16,13 @@ The following example game is won by the first player, X:
 
 ## How to Play
 
+1. Start to enter your name as player1 and player2.
+2. Player1 will start the first move as the command line prompt. (Enter number from (1 ~ 9)).
+3. A game board will print out to show where the move it is.
+4. Player2 will prompt to input his move next (Enter number from (1 ~ 9)).
+5. A game board will print out to show where the move it is.
+6. The game will continue repeat step 2 to 5 until win or game board is fulled.
+
 ## Reference links
 
 - [Tic-tac-toe Wikipedia](https://en.wikipedia.org/wiki/Tic-tac-toe)
