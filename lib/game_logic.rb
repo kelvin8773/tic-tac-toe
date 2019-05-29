@@ -1,7 +1,6 @@
    
 class Game
     attr_accessor :positions
-    # attr_reader :character, :player
 
     def initialize(positions)
         @positions = positions 
@@ -12,18 +11,23 @@ class Game
              ] 
     end
 
-
-    def play_game(char, player, positions)
+    def play_game(char, player, positions, input=[])
      puts "#{player}, Please enter your position (1 - 9) :"
      pos = gets.chomp
+     input << pos.to_i
+    
      pos = pos.to_i - 1
      positions[pos] = char
-        if (1..9).include?(pos)
+        if (0..8).include?(pos)
             self.is_fulled?(pos) ? puts("Try again, that spot has been taken already.\n\n") : pos
         else
             puts "Enter valid number"
         end 
+    
+    return input
+        
     end
+
 
     def display(positions)
         puts "\t  #{positions[6]} | #{positions[7]} | #{positions[8]}"
@@ -46,23 +50,8 @@ class Game
         @positions[num] == "X" || "O" == @positions[num]
     end
 
-    def wins?
-
-        @line && @positions == @line
+    def wins?(input)
+        @lines.any?{|x| x - input == [] }
     end
-
-    # def who_wins?(player)
-    #     # Player.each{|player|
-    #     #     @lines.each{|line|
-    #     #         return Player.name() if Player.wins?(line)
-    #     #     }
-    #     # }
-
-    #     if wins? 
-    #         put "#{player}, you win!" if wins?
-
-
-    #     false
-    # end
         
 end 
