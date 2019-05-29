@@ -1,4 +1,6 @@
-load '../lib/game_logic.rb'
+require '../lib/board.rb'
+require '../lib/player.rb' 
+require '../lib/game.rb'
 
 positions = [1, 2, 3, 4, 5, 6, 7, 8, 9]
 game = Game.new(positions) 
