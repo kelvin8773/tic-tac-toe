@@ -6,8 +6,10 @@ inputOne = []
 inputTwo = []
 name_1 = ""
 name_2 = ""
+game_on = true
 
-until game.if_full?
+
+until game_on == false
   
   if name_1 == ""
     puts "Player 1 enter your name: "
@@ -19,29 +21,27 @@ until game.if_full?
     name_2 = gets.chomp
   end
 
-  game.display(positions)
-
   inputOne = game.play_game("X", name_1, positions, inputOne)
-  p inputOne
 
   if game.wins?(inputOne)
     puts "You win #{name_1}!"
     game.display(positions)
     break;
+  elsif game.if_full?
+    puts "Game board is full!"
+    break;
   end
   
-  game.display(positions)
-
-  
   inputTwo = game.play_game("O", name_2, positions,inputTwo)
-  # p inputTwo
 
   if game.wins?(inputTwo)
     puts "You win #{name_2} !"
     game.display(positions)
-    break;
-  end
-  
+    game_on = false
+  elsif game.if_full?
+    puts "Game board is full!"
+    game_on = false
+  end  
 end
 
 

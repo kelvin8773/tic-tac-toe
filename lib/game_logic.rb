@@ -12,29 +12,32 @@ class Game
     end
 
     def play_game(char, player, positions, input=[])
-     puts "#{player}, Please enter your position (1 - 9) :"
-    
-     number = nil
+        
+        self.display(positions)
 
-     pos = gets.chomp
-     loop do 
-        regex = /^[1-9]$/
-        break if regex.match?(pos)
-        puts "That is not a number"
-        break
-     end
+        pos = nil
+        index = 0
 
-     input << pos.to_i
-    
-     pos = pos.to_i - 1
-     positions[pos] = char
-        if (0..8).include?(pos)
-            self.is_fulled?(pos) ? puts("Try again, that spot has been taken already.\n\n") : pos
-        else
+        loop do 
+            puts "#{player}, Please enter your position (1 - 9) :"
+            pos = gets.chomp
+            regex = /^[1-9]$/
+            if regex.match?(pos)
+                index = pos.to_i
+                index -= 1  
+                if positions[index] == "X" || positions[index] == "O"
+                    puts("Try again, that spot has been taken already.\n\n") 
+                    next
+                end
+                break
+            end           
             puts "Enter valid number"
-        end 
+        end
+
+        input << pos.to_i
+        positions[index] = char
     
-    return input
+        return input
         
     end
 
@@ -48,20 +51,14 @@ class Game
         puts ""
     end
 
-     def fill_board(pos, char)
-        @positions[pos] = char
-    end
-
+    
     def if_full?
-        @positions[0..8].all?{|x| x.instance_of?(String)}
+        @positions.all?{|x| x.instance_of?(String)}
     end
 
-     def is_fulled?(num)
-        @positions[num] == "X" || "O" == @positions[num]
-    end
 
     def wins?(input)
-        @lines.any?{|x| x - input == [] }
+        @lines.any?{|x| x - input == []}
     end
         
 end 
