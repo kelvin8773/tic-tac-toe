@@ -13,7 +13,17 @@ class Game
 
     def play_game(char, player, positions, input=[])
      puts "#{player}, Please enter your position (1 - 9) :"
+    
+     number = nil
+
      pos = gets.chomp
+     loop do 
+        regex = /^[1-9]$/
+        break if regex.match?(pos)
+        puts "That is not a number"
+        break
+     end
+
      input << pos.to_i
     
      pos = pos.to_i - 1
