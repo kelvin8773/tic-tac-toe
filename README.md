@@ -16,12 +16,13 @@ The following example game is won by the first player, X:
 
 ## How to Play
 
+0. To start the game, `git clone` the repository and `cd bin/` folder, type `ruby main.rb` to start.
 1. Start to enter your name as player1 and player2.
-2. Player1 will start the first move as the command line prompt. (Enter number from (1 ~ 9)).
-3. A game board will print out to show where the move it is.
-4. Player2 will prompt to input his move next (Enter number from (1 ~ 9)).
-5. A game board will print out to show where the move it is.
-6. The game will continue repeat step 2 to 5 until win or game board is fulled.
+1. Player1 will start the first move as the command line prompt. (Enter number from (1 ~ 9)).
+1. A game board will print out to show where the move it is.
+1. Player2 will prompt to input his move next (Enter number from (1 ~ 9)).
+1. A game board will print out to show where the move it is.
+1. The game will continue repeat step 2 to 5 until win or game board is fulled.
 
 ## Reference links
 
