@@ -1,32 +1,31 @@
-class GameBoard
-    attr_accessor :positions
+module Board
 
-    def initialize(positions)
-        @positions = positions
+  def display(positions)
+    puts "\t  #{positions[6]} | #{positions[7]} | #{positions[8]}"
+    puts "\t ---|---|---"
+    puts "\t  #{positions[3]} | #{positions[4]} | #{positions[5]}"
+    puts "\t ---|---|---"
+    puts "\t  #{positions[0]} | #{positions[1]} | #{positions[2]}"
+    puts ""
+  end
+
+  def checkInputValidation(player,positions)
+
+    loop do 
+      puts "#{player}, Please enter your position (1 - 9) :"
+      input = gets.chomp
+      regex = /^[1-9]$/
+      if regex.match?(input)
+          index = input.to_i - 1
+          if positions[index] == "X" || positions[index] == "O"
+              puts("Try again, that spot has been taken already.\n\n") 
+              next
+          end
+          return index
+      end           
+      puts "Enter valid number"
     end
 
-    def display(positions)
-        puts "\t  #{positions[6]} | #{positions[7]} | #{positions[8]}"
-        puts "\t ---|---|---"
-        puts "\t  #{positions[3]} | #{positions[4]} | #{positions[5]}"
-        puts "\t ---|---|---"
-        puts "\t  #{positions[0]} | #{positions[1]} | #{positions[2]}"
-        puts ""
-    end
-
-     def fill_board(pos, char)
-        @positions[pos] = char
-    end
-
-    def if_full?
-        @positions[0..8].all?{|x| x.instance_of?(String)}
-    end
-
-     def is_fulled?(num)
-        @positions[num] == "X" || "O" == @positions[num]
-    end
+  end
 
 end
-
-   
-
