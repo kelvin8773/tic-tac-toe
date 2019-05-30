@@ -8,70 +8,49 @@ inputOne = []
 inputTwo = []
 name_1 = ""
 name_2 = ""
-game_on = true
+game_finished = false
 
 
-until game_on == false
+until game_finished == true
   
-  if name_1 == ""
-    puts "Player 1 enter your name: "
-    name_1 = gets.chomp
-  end
-
-  if name_2 == ""
-    puts "Player 2 enter your name: "
-    name_2 = gets.chomp
+  if name_1 == "" || name_2 == "" 
+  name_1 = game.ask_name()
+  name_2 = game.ask_name()
   end
 
   inputOne = game.play_game("X", name_1, positions, inputOne)
 
-  if game.wins?(inputOne)
-    game.display(positions)
-    puts "You win #{name_1}!"
-    game_on = false
-  elsif game.if_full?
-    puts "Game board is full!"
-    game_on = false
-  end
+  game_finished = game.check_game_finish(inputOne, positions, name_1)
 
-  if game_on == false
+  if game_finished == true
     puts "#{name_1}, would you like to play again?(y/n)?" 
     play_again = gets.chomp
     if play_again == "y"
       positions = [1, 2, 3, 4, 5, 6, 7, 8, 9]
       inputOne = []
       inputTwo = []
-      game_on = true
+      game_finished = false
       next
     end
     break
   end
   
+
   inputTwo = game.play_game("O", name_2, positions,inputTwo)
   
-  if game.wins?(inputTwo)
-    puts "You win #{name_2} !"
-    game.display(positions)
-    game_on = false
-  elsif game.if_full?
-    puts "Game board is full!"
-    game_on = false
-  end  
+  game_finished = game.check_game_finish(inputTwo, positions, name_2)
   
-  if game_on == false
+  if game_finished == true
     puts "#{name_2}, would you like to play again?(y/n)?" 
     play_again = gets.chomp
     if play_again == "y"
       positions = [1, 2, 3, 4, 5, 6, 7, 8, 9]
       inputOne = []
       inputTwo = []
-      game_on = true
+      game_finished = false
       next
     end
     break
   end
 
 end
-
-
-  
