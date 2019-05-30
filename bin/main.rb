@@ -2,55 +2,32 @@ require '../lib/board.rb'
 require '../lib/player.rb' 
 require '../lib/game.rb'
 
-positions = [1, 2, 3, 4, 5, 6, 7, 8, 9]
-game = Game.new(positions) 
-inputOne = []
-inputTwo = []
-name_1 = ""
-name_2 = ""
-game_finished = false
+game_status = "play"
 
-
-until game_finished == true
+until game_status == "finish"
   
-  if name_1 == "" || name_2 == "" 
-  name_1 = game.ask_name()
-  name_2 = game.ask_name()
+  if game_status == "play"
+    positions = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+    game = Game.new(positions) 
+    playerOne = true
+    
+    player1 = Player.new()   
+    puts "Player 1, Please Inputer your Name: "
+    player1.name = gets.chomp
+
+    player2 = Player.new()
+    puts "Player 2, Please Inputer your Name: "
+    player2.name = gets.chomp
   end
 
-  inputOne = game.play_game("X", name_1, positions, inputOne)
-
-  game_finished = game.check_game_finish(inputOne, positions, name_1)
-
-  if game_finished == true
-    puts "#{name_1}, would you like to play again?(y/n)?" 
-    play_again = gets.chomp
-    if play_again == "y"
-      positions = [1, 2, 3, 4, 5, 6, 7, 8, 9]
-      inputOne = []
-      inputTwo = []
-      game_finished = false
-      next
-    end
-    break
-  end
-  
-
-  inputTwo = game.play_game("O", name_2, positions,inputTwo)
-  
-  game_finished = game.check_game_finish(inputTwo, positions, name_2)
-  
-  if game_finished == true
-    puts "#{name_2}, would you like to play again?(y/n)?" 
-    play_again = gets.chomp
-    if play_again == "y"
-      positions = [1, 2, 3, 4, 5, 6, 7, 8, 9]
-      inputOne = []
-      inputTwo = []
-      game_finished = false
-      next
-    end
-    break
+  if playerOne
+    player1.inputs = game.play_game("X", player1.name, positions, player1.inputs)
+    game_status = game.check_game_finish(player1.name, positions, player1.inputs)
+    playerOne = false
+  else
+    player2.inputs = game.play_game("O", player2.name, positions, player2.inputs)
+    game_status = game.check_game_finish(player2.name, positions, player2.inputs)
+    playerOne = true
   end
 
 end

@@ -6,9 +6,8 @@ class Player
     @inputs = inputs
   end
 
-
-  def updateInputs(input)
-    inputs << input
+  def input_name
+    @name = gets.chomp
   end
 
 end
