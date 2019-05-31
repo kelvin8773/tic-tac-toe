@@ -6,6 +6,11 @@ class Player
     @inputs = inputs
   end
 
+  def initial
+    @name = ""
+    @inputs = []
+  end
+
   def input_name
     @name = gets.chomp
   end

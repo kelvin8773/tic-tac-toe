@@ -1,36 +1,54 @@
-   class Game
-    include Board
+class Game
+    include UserInterface
 
-    attr_accessor :positions
-
-    def initialize(positions)
-        @positions = positions 
-        @lines = [
-              [1,2,3],[4,5,6],[7,8,9],
-              [1,4,7],[2,5,8],[3,6,9],
-              [1,5,9],[3,5,7]
-             ]
+    def initialize(player1, player2, board)
+        @player1 = player1
+        @player2 = player2
+        @board = board
+        @status = "play"
+        @who = "One"
     end
 
-    def play_game(char, player, positions, inputs=[])
-        display(positions)
-        index = checkInputValidation(player, positions)
-        inputs << index + 1
-        positions[index] = char   
-        return inputs      
+    def gameInitialize
+        player1.initial
+        player2.initial
+        board.initial
     end
+
+
+    def playGame
+
+        until @status == "finish"
+            
+            if status == "play"
+                gameInitialize
+            end
+
+            if  who == "One"
+                board.show
+                index = getInput(player1.name, board.positions)
+                player1.inputs << index + 1
+                board.positions[index] = "X"  
+
+            
+                status = check_game_finish(player1.name, positions, player1.inputs)
+
+                who = "Two"
+            else
+                player2.inputs = play_game("O", player2.name, board.positions, player2.inputs)
+                status = check_game_finish(player2.name, positions, player2.inputs)
+                who = "One"
+            end
+        end
+
+
+    end
+
     
-    def if_full?
-        @positions.all?{|x| x.instance_of?(String)}
-    end
-
-    def wins?(inputs)
-        @lines.any?{|x| x - inputs == []}
-    end
-        
+     
     def check_game_finish(player, positions, inputs)
         if wins?(inputs)
-            display(positions)
+            board.show
             puts "You win #{player}!"  
             return "play" if play_again?(player)
             return "finish"
