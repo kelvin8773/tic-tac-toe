@@ -6,65 +6,66 @@ class Game
         @player2 = player2
         @board = board
         @status = "play"
-        @who = "One"
+        # @who = @palyer1
     end
 
     def gameInitialize
-        player1.initial
-        player2.initial
-        board.initial
+        @player1.initial
+        @player1.getName
+        @player2.initial
+        @player2.getName
+        @board.initial
     end
 
 
     def playGame
-
         until @status == "finish"
             
-            if status == "play"
+            if @status == "play"
                 gameInitialize
+                @status = "continues"
             end
 
-            if  who == "One"
-                board.show
-                index = getInput(player1.name, board.positions)
-                player1.inputs << index + 1
-                board.positions[index] = "X"  
+            play(@player1, "X")
+            play(@player2, "O")
 
-            
-                status = check_game_finish(player1.name, positions, player1.inputs)
+        end
+    end
 
-                who = "Two"
+    def play(player, char)
+        @board.show
+        index = getInput(player.name, @board.positions)
+        player.inputs << index + 1
+        @board.positions[index] = char 
+        
+        if finish?
+            if playAgain?
+                @status = "play"
             else
-                player2.inputs = play_game("O", player2.name, board.positions, player2.inputs)
-                status = check_game_finish(player2.name, positions, player2.inputs)
-                who = "One"
+                @status = "finish"
             end
         end
 
-
     end
 
-    
-     
-    def check_game_finish(player, positions, inputs)
-        if wins?(inputs)
-            board.show
-            puts "You win #{player}!"  
-            return "play" if play_again?(player)
-            return "finish"
-        elsif if_full?
-            display(positions)
+  
+
+    def finish?
+        if @board.wins?(@player1.inputs) || @board.wins?(@player2.inputs)
+            @board.show
+            puts "You win !" 
+            return  true
+        elsif @board.if_full?
+            @board.show
             puts "Game board is full!"
-            return "play" if play_again?(player)
-            return "finish"
+            return true
         end
-        return "continue"
     end
-
-    def play_again?(player)
-        puts "#{player}, would you like to play again?(y/n)?" 
-        play_again = gets.chomp
-        if play_again == "y"
+    
+    def playAgain?
+        puts "Would you like to play again?(y/n)?" 
+        input = gets.chomp
+        if input == "y"
             return true
         end
         false

@@ -1,10 +1,10 @@
 class Board
-  include UserInferface
+  include UserInterface
 
   attr_accessor :positions, :lines
 
-  def initialize(positions)
-    @positions = positions 
+  def initialize()
+    @positions = [1, 2, 3, 4, 5, 6, 7, 8, 9]
     @lines = [
           [1,2,3],[4,5,6],[7,8,9],
           [1,4,7],[2,5,8],[3,6,9],
@@ -17,7 +17,7 @@ class Board
   end
 
   def show
-    display(positions)
+    display(@positions)
   end
 
   def if_full?

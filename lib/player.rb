@@ -11,7 +11,8 @@ class Player
     @inputs = []
   end
 
-  def input_name
+  def getName
+    puts "Please Input your Name:"
     @name = gets.chomp
   end
 
