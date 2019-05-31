@@ -10,7 +10,6 @@ module Board
   end
 
   def checkInputValidation(player,positions)
-
     loop do 
       puts "#{player}, Please enter your position (1 - 9) :"
       input = gets.chomp
