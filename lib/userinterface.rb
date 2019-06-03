@@ -33,7 +33,6 @@ module UserInterface
     loop do 
       print "#{player}, "
       input = getInput('input', true)
-      
       if checkValidNumber?(input)
           pos = input.to_i 
           if checkTaken?(positions,pos-1)

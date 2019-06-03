@@ -5,7 +5,7 @@ class Game
         @player1 = player1
         @player2 = player2
         @board = board
-        @status = "intial"
+        @status = "initial"
     end
 
     def gameInitialize
@@ -18,22 +18,24 @@ class Game
 
 
     def playGame
-
+        
         until @status == "finish"
-         
-            [@player1, @player2].each do |player|    
-                
-                exit if checkStatus?(player.inputs)
+
+            [@player1, @player2].each do |player| 
+
+                checkStatus?(player.inputs)
 
                 @board.show
                 
                 position = getPosition(player.name, @board.positions)
                 
                 player.update(position)
-
+                
                 @board.update(position-1, player.char)
+                
+                checkStatus?(player.inputs)
 
-            end
+        end
            
         end
     end
@@ -41,14 +43,14 @@ class Game
     
     def checkStatus?(inputs)
         case @status
-        when "inital"
-            gameInitialize
+        when "initial"
             @status = "continues"
+            gameInitialize
             return false
         when "continues"
             if @board.check?(inputs)
                 if playAgain?
-                    @status = "inital"
+                    @status = "initial"
                     gameInitialize
                     @status = "continues"
                     return false

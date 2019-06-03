@@ -41,7 +41,6 @@ class Board
     return false
   end
 
-
   def isFull?
     @positions.all?{|x| x.instance_of?(String)}  
   end
