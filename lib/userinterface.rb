@@ -8,9 +8,11 @@ module UserInterface
       'taken' => "Try again, that spot has been taken already.\n" ,
       'valid' => "Please enter an valid number, thanks!",
       'play' => "Would you like to play again?(y/n)?" ,
-      'win' => "Congrate! You won!",
+      'win' => "congrate! You won!",
       'full' => "Game board is full!",
-      'name' => "Please input your Name: ",
+      'playerOne' => "Player one please input your name: ",
+      'playerTwo' => "Player two please input your name: ",
+      'finish' => "Thank you to play!"
     } 
     puts texts[textname] 
     if input
@@ -36,24 +38,34 @@ module UserInterface
       if checkValidNumber?(input)
           pos = input.to_i 
           if checkTaken?(positions,pos-1)
-              getInput('Taken')
+              getInput('taken')
+              @board.show
               next
           end
           return pos 
       elsif input == "q"
+        getInput('finish')
         exit
       end
       getInput('valid')
+      @board.show
     end
   end
 
   def playAgain?   
     if getInput('play', true) == "y"
       return true
-    end
+  else
+    getInput('finish')
+    sleepy
+    exit
+  end
       return false
   end
-  
+
+  def sleepy
+    sleep 1
+  end
 
 end
 

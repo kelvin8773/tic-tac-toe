@@ -14,8 +14,12 @@ class Player
     @inputs = []
   end
 
-  def getName
-    @name = getInput('name', true)
+  def getNameOne
+    @name = getInput('playerOne', true)
+  end
+
+  def getNameTwo
+    @name = getInput('playerTwo', true)
   end
 
   def update(input)

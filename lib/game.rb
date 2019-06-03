@@ -10,9 +10,9 @@ class Game
 
     def gameInitialize
         @player1.initial
-        @player1.getName
+        @player1.getNameOne
         @player2.initial
-        @player2.getName
+        @player2.getNameTwo
         @board.initial
     end
 
@@ -31,13 +31,12 @@ class Game
                 
                 @board.update(position-1, player.char)
 
-                if @board.check?(player.inputs)
+                if @board.check?(player.inputs, player.name)
                     if playAgain?
                         @status = "initial"
-                        next
+                        checkStatus?
                     else
                         @status = "finish"
-                        next
                     end
                 end
             

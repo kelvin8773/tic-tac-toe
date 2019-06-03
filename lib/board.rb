@@ -29,13 +29,14 @@ class Board
     @positions[index] = char
   end
 
-  def check?(inputs)
+  def check?(inputs, name)
     if isFull? 
       getInput('full')
       return true
     elsif wins?(inputs)
-      # print "#{name}, " 
+       print "#{name}, " 
       getInput('win') 
+      show
       return true
     end  
     return false
