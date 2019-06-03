@@ -19,46 +19,44 @@ class Game
 
     def playGame
         
-        until @status == "finish"
+        until checkStatus?
 
             [@player1, @player2].each do |player| 
 
-                checkStatus?(player.inputs)
-
                 @board.show
-                
+
                 position = getPosition(player.name, @board.positions)
                 
                 player.update(position)
                 
                 @board.update(position-1, player.char)
-                
-                checkStatus?(player.inputs)
 
+                if @board.check?(player.inputs)
+                    if playAgain?
+                        @status = "initial"
+                        next
+                    else
+                        @status = "finish"
+                        next
+                    end
+                end
+            
+            end       
         end
-           
-        end
+
     end
 
     
-    def checkStatus?(inputs)
+    def checkStatus?
         case @status
         when "initial"
-            @status = "continues"
             gameInitialize
+            @status = "continues"
             return false
         when "continues"
-            if @board.check?(inputs)
-                if playAgain?
-                    @status = "initial"
-                    gameInitialize
-                    @status = "continues"
-                    return false
-                else
-                    @status = "finish"
-                    return true
-                end
-            end
+            return false
+        when "finish"
+            return true   
         end
         
     end

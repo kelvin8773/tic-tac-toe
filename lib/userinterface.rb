@@ -48,7 +48,7 @@ module UserInterface
   end
 
   def playAgain?   
-    if getInput('play') == "y"
+    if getInput('play', true) == "y"
       return true
     end
       return false
