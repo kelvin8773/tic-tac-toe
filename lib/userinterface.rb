@@ -20,9 +20,9 @@ module UserInterface
 
 
   def getInput(player,positions)
-    
     loop do 
       puts "#{player}, Please enter your position (1 - 9) :"
+      puts "press 'q' to exit game"
       input = gets.chomp
       
       if checkValidNumber?(input)
@@ -31,15 +31,23 @@ module UserInterface
               puts "Try again, that spot has been taken already.\n\n"
               next
           end
-          return index
-      end  
-
-      puts "Enter valid number"
+          return index  
+      elsif input == "q"
+        exit
+      end
+        puts "Enter valid number"
     end
 
   end
 
-
+  def playAgain?
+    puts "Would you like to play again?(y/n)?" 
+    input = gets.chomp
+    if input == "y"
+      return true
+      end
+      false
+  end
 
 end
 

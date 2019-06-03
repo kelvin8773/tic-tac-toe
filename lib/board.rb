@@ -20,7 +20,7 @@ class Board
     display(@positions)
   end
 
-  def if_full?
+  def isFull?
     @positions.all?{|x| x.instance_of?(String)}
   end
 

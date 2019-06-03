@@ -6,7 +6,6 @@ class Game
         @player2 = player2
         @board = board
         @status = "play"
-        # @who = @palyer1
     end
 
     def gameInitialize
@@ -38,37 +37,37 @@ class Game
         player.inputs << index + 1
         @board.positions[index] = char 
         
-        if finish?
-            if playAgain?
-                @status = "play"
-            else
-                @status = "finish"
-            end
-        end
-
+        checkFinished
     end
 
-  
+    def checkFinished
+        if finish?
+        if playAgain?
+            @status = "play"
+            gameInitialize
+            @status = "continues"
+       else
+            @status = "finish"
 
+        end
+        end
+    end
+  
     def finish?
-        if @board.wins?(@player1.inputs) || @board.wins?(@player2.inputs)
+        if @board.wins?(@player1.inputs)
             @board.show
-            puts "You win !" 
+            puts "#{@player1.name} you win!" 
             return  true
-        elsif @board.if_full?
+        elsif @board.wins?(@player2.inputs)
+            @board.show
+            puts "#{@player2.name} you win!" 
+            return  true
+        elsif @board.isFull?
             @board.show
             puts "Game board is full!"
             return true
         end
     end
-    
-    def playAgain?
-        puts "Would you like to play again?(y/n)?" 
-        input = gets.chomp
-        if input == "y"
-            return true
-        end
-        false
-    end
+
 
 end 
