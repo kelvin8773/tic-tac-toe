@@ -17,16 +17,37 @@ class Board
   end
 
   def show
-    display(@positions)
+    puts "\t  #{@positions[6]} | #{@positions[7]} | #{@positions[8]}"
+    puts "\t ---|---|---"
+    puts "\t  #{@positions[3]} | #{@positions[4]} | #{@positions[5]}"
+    puts "\t ---|---|---"
+    puts "\t  #{@positions[0]} | #{@positions[1]} | #{@positions[2]}"
+    puts ""
   end
 
+  def update(index, char)
+    @positions[index] = char
+  end
+
+  def check?(inputs)
+    if isFull? 
+      getInput('full')
+      return true
+    elsif wins?(inputs)
+      # print "#{name}, " 
+      getInput('win') 
+      return true
+    end  
+    return false
+  end
+
+
   def isFull?
-    @positions.all?{|x| x.instance_of?(String)}
+    @positions.all?{|x| x.instance_of?(String)}  
   end
 
   def wins?(inputs)
-    @lines.any?{|x| x - inputs == []}
+     @lines.any?{|x| x - inputs == []}  
   end
-    
-
+  
 end

@@ -5,7 +5,7 @@ class Game
         @player1 = player1
         @player2 = player2
         @board = board
-        @status = "play"
+        @status = "intial"
     end
 
     def gameInitialize
@@ -18,56 +18,47 @@ class Game
 
 
     def playGame
+
         until @status == "finish"
-            
-            if @status == "play"
-                gameInitialize
-                @status = "continues"
+         
+            [@player1, @player2].each do |player|    
+                
+                exit if checkStatus?(player.inputs)
+
+                @board.show
+                
+                position = getPosition(player.name, @board.positions)
+                
+                player.update(position)
+
+                @board.update(position-1, player.char)
+
             end
-
-            play(@player1, "X")
-            play(@player2, "O")
-
+           
         end
     end
 
-    def play(player, char)
-        @board.show
-        index = getInput(player.name, @board.positions)
-        player.inputs << index + 1
-        @board.positions[index] = char 
-        
-        checkFinished
-    end
-
-    def checkFinished
-        if finish?
-        if playAgain?
-            @status = "play"
+    
+    def checkStatus?(inputs)
+        case @status
+        when "inital"
             gameInitialize
             @status = "continues"
-       else
-            @status = "finish"
-
+            return false
+        when "continues"
+            if @board.check?(inputs)
+                if playAgain?
+                    @status = "inital"
+                    gameInitialize
+                    @status = "continues"
+                    return false
+                else
+                    @status = "finish"
+                    return true
+                end
+            end
         end
-        end
+        
     end
-  
-    def finish?
-        if @board.wins?(@player1.inputs)
-            @board.show
-            puts "#{@player1.name} you win!" 
-            return  true
-        elsif @board.wins?(@player2.inputs)
-            @board.show
-            puts "#{@player2.name} you win!" 
-            return  true
-        elsif @board.isFull?
-            @board.show
-            puts "Game board is full!"
-            return true
-        end
-    end
-
 
 end 

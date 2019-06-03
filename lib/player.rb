@@ -1,9 +1,12 @@
 class Player 
-  attr_accessor :name, :inputs
+  include UserInterface
 
-  def initialize(name=nil, inputs=[])
+  attr_accessor :name, :inputs, :char
+
+  def initialize(name=nil, inputs=[], char)
     @name = name
     @inputs = inputs
+    @char = char
   end
 
   def initial
@@ -12,8 +15,11 @@ class Player
   end
 
   def getName
-    puts "Please Input your Name:"
-    @name = gets.chomp
+    @name = getInput('name', true)
+  end
+
+  def update(input)
+    @inputs << input
   end
 
 end

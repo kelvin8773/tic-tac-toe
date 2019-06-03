@@ -1,13 +1,24 @@
 module UserInterface
 
-  def display(positions)
-    puts "\t  #{positions[6]} | #{positions[7]} | #{positions[8]}"
-    puts "\t ---|---|---"
-    puts "\t  #{positions[3]} | #{positions[4]} | #{positions[5]}"
-    puts "\t ---|---|---"
-    puts "\t  #{positions[0]} | #{positions[1]} | #{positions[2]}"
-    puts ""
+  
+
+  def getInput(textname, input=false)
+    texts ={
+      'input' => "Please enter your position (1 - 9) or press 'q' to exit game:",
+      'taken' => "Try again, that spot has been taken already.\n" ,
+      'valid' => "Please enter an valid number, thanks!",
+      'play' => "Would you like to play again?(y/n)?" ,
+      'win' => "Congrate! You won!",
+      'full' => "Game board is full!",
+      'name' => "Please input your Name: ",
+    } 
+    puts texts[textname] 
+    if input
+      return gets.chomp
+    end
+
   end
+
 
   def checkTaken?(positions, index)
      positions[index] == "X" || positions[index] == "O"
@@ -18,36 +29,32 @@ module UserInterface
       regex.match?(input)
   end
 
-
-  def getInput(player,positions)
+  def getPosition(player,positions)
     loop do 
-      puts "#{player}, Please enter your position (1 - 9) :"
-      puts "press 'q' to exit game"
-      input = gets.chomp
+      print "#{player}, "
+      input = getInput('input', true)
       
       if checkValidNumber?(input)
-          index = input.to_i - 1
-          if checkTaken?(positions,index)
-              puts "Try again, that spot has been taken already.\n\n"
+          pos = input.to_i 
+          if checkTaken?(positions,pos-1)
+              getInput('Taken')
               next
           end
-          return index  
+          return pos 
       elsif input == "q"
         exit
       end
-        puts "Enter valid number"
+      getInput('valid')
     end
-
   end
 
-  def playAgain?
-    puts "Would you like to play again?(y/n)?" 
-    input = gets.chomp
-    if input == "y"
+  def playAgain?   
+    if getInput('play') == "y"
       return true
-      end
-      false
+    end
+      return false
   end
+  
 
 end
 
