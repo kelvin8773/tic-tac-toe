@@ -31,9 +31,12 @@ The following example game is won by the first player, X:
 7. If it is not full or winning, repeat 2 ~ 5 steps.
 8. if yes will go back to step 2, otherwise game will finish.
 
+
 ## Reference links
 
 - [Tic-tac-toe Wikipedia](https://en.wikipedia.org/wiki/Tic-tac-toe)
+
 - [Object Oriented Programming reference](https://www.theodinproject.com/courses/ruby-programming/lessons/object-oriented-programming)
 - [Project Instruction](https://www.theodinproject.com/courses/ruby-programming/lessons/oop)
 - [Project Demo](https://repl.it/@KelvinLiang/tic-tac-toe)
+
