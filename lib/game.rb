@@ -1,55 +1,81 @@
-   class Game
-    include Board
+class Game
+    include Interface
 
-    attr_accessor :positions
-
-    def initialize(positions)
-        @positions = positions 
-        @lines = [
-              [1,2,3],[4,5,6],[7,8,9],
-              [1,4,7],[2,5,8],[3,6,9],
-              [1,5,9],[3,5,7]
-             ]
+    def initialize(player1, player2, board)
+        @player1 = player1
+        @player2 = player2
+        @board = board
+        @status = "initial"
     end
 
-    def play_game(char, player, positions, inputs=[])
-        display(positions)
-        index = checkInputValidation(player, positions)
-        inputs << index + 1
-        positions[index] = char   
-        return inputs      
-    end
-    
-    def if_full?
-        @positions.all?{|x| x.instance_of?(String)}
+    def initial
+        [@player1, @player2].each {|player| player.initial}
+        @board.initial
     end
 
-    def wins?(inputs)
-        @lines.any?{|x| x - inputs == []}
-    end
+    def play
+        getInput('welcome')
+  
+        loop do
+
+            if @status == "initial"
+                self.initial
+                @status = "continue"               
+                @board.show
+            end
         
-    def check_game_finish(player, positions, inputs)
-        if wins?(inputs)
-            display(positions)
-            puts "You win #{player}!"  
-            return "play" if play_again?(player)
-            return "finish"
-        elsif if_full?
-            display(positions)
-            puts "Game board is full!"
-            return "play" if play_again?(player)
-            return "finish"
+            [@player1, @player2].each do |player| 
+    
+                loop do
+                    print "#{player.name}, "
+                    
+                    input = getInput('position')
+
+                    if validNumber?(input)
+                        input = input.to_i
+                        if @board.taken?(input)
+                            getInput('taken') 
+                            next
+                        else
+                            player.update(input)
+                            @board.update(input, player.char)
+                            @board.show
+                            break
+                        end
+                    else   
+                        self.finish if input == "q"              
+                        getInput('valid')
+                    end    
+                    @board.show         
+                end
+
+                if @board.win?(player.inputs) || @board.full?
+                    print "#{player.name}, "  
+                    getInput('full') if @board.full?
+                    getInput('win') if @board.win?(player.inputs)
+                    @board.show
+                   
+                    if self.playAgain
+                        break
+                    else
+                        self.finish
+                    end 
+                end
+            end  
         end
-        return "continue"
     end
 
-    def play_again?(player)
-        puts "#{player}, would you like to play again?(y/n)?" 
-        play_again = gets.chomp
-        if play_again == "y"
+    def playAgain    
+        if getInput('play?')    
+            @status = "initial"
             return true
-        end
-        false
+        end   
+    end
+
+    def finish
+        getInput('finish')
+        sleep 1
+        exit
     end
 
 end 
