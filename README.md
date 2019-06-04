@@ -16,9 +16,9 @@ The following example game is won by the first player, X:
 
 ## How to Run the Game
 
-1. install pre-request - `colorize' by running following command:`gem install colorize`
-2. `git clone` the repository and `cd tic-tac-toe\` folder, type following command to start.
-   `ruby ./bin/main.rb`
+1. `gem install colorize` install pre-request "colorize".
+
+2. `git clone` the repository and `cd tic-tac-toe\` folder, type `ruby ./bin/main.rb` to start.
 
 ## How to Play
 
