@@ -1,4 +1,4 @@
-require '../lib/userinterface'
+require '../lib/interface'
 require '../lib/board'
 require '../lib/player' 
 require '../lib/game'
@@ -9,7 +9,7 @@ player2 = Player.new("O")
 board = Board.new
 game = Game.new(player1, player2, board)
 
-game.playGame
+game.play
 
 
 

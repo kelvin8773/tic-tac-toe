@@ -1,5 +1,5 @@
 class Board
-  include UserInterface
+  include Interface
 
   attr_accessor :positions, :lines
 
@@ -25,29 +25,20 @@ class Board
     puts ""
   end
 
-  def update(index, char)
-    @positions[index] = char
+  def update(input, char)
+    @positions[input-1] = char
   end
 
-  def check?(inputs, name)
-    if isFull? 
-      getInput('full')
-      return true
-    elsif wins?(inputs)
-       print "#{name}, " 
-      getInput('win') 
-      show
-      return true
-    end  
-    return false
-  end
-
-  def isFull?
+  def full?
     @positions.all?{|x| x.instance_of?(String)}  
   end
 
-  def wins?(inputs)
+  def win?(inputs)
      @lines.any?{|x| x - inputs == []}  
   end
+
+  def taken?(input)
+    @positions[input-1] == "X" || @positions[input-1] == "O"
+  end 
   
 end

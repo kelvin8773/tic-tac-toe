@@ -1,5 +1,5 @@
 class Game
-    include UserInterface
+    include Interface
 
     def initialize(player1, player2, board)
         @player1 = player1
@@ -8,56 +8,77 @@ class Game
         @status = "initial"
     end
 
-    def gameInitialize
+    def initial
         @player1.initial
         @player1.getNameOne
         @player2.initial
         @player2.getNameTwo
         @board.initial
     end
+    
+    def play
+        getInput('welcome')
+  
+        loop do
 
-
-    def playGame
-        
-        until checkStatus?
+            if @status == "initial"
+                self.initial
+                @status = "continue"               
+                @board.show
+            end
 
             [@player1, @player2].each do |player| 
 
-                @board.show
+                loop do
+                    print "#{player.name}, "
+                    
+                    input = getInput('position')
 
-                position = getPosition(player.name, @board.positions)
-                
-                player.update(position)
-                
-                @board.update(position-1, player.char)
-
-                if @board.check?(player.inputs, player.name)
-                    if playAgain?
-                        @status = "initial"
-                        checkStatus?
-                    else
-                        @status = "finish"
-                    end
+                    if validNumber?(input)
+                        input = input.to_i
+                        if @board.taken?(input)
+                            getInput('taken') 
+                            next
+                        else
+                            player.update(input)
+                            @board.update(input, player.char)
+                            @board.show
+                            break
+                        end
+                    else   
+                        self.finish if input == "q"              
+                        getInput('valid')
+                    end    
+                    @board.show         
                 end
-            
-            end       
-        end
 
+                if @board.win?(player.inputs) || @board.full?
+                    print "#{player.name}, "  
+                    getInput('full') if @board.full?
+                    getInput('win') if @board.win?(player.inputs)
+                    @board.show
+                   
+                    if self.playAgain
+                        break
+                    else
+                        self.finish
+                    end 
+                end
+            end  
+        end
     end
 
-    
-    def checkStatus?
-        case @status
-        when "initial"
-            gameInitialize
-            @status = "continues"
-            return false
-        when "continues"
-            return false
-        when "finish"
-            return true   
-        end
-        
+    def playAgain    
+        if getInput('play?')    
+            @status = "initial"
+            return true
+        end   
+    end
+
+    def finish
+        getInput('finish')
+        sleep 1
+        exit
     end
 
 end 

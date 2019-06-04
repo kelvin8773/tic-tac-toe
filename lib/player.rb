@@ -1,5 +1,5 @@
 class Player 
-  include UserInterface
+  include Interface
 
   attr_accessor :name, :inputs, :char
 
@@ -15,11 +15,11 @@ class Player
   end
 
   def getNameOne
-    @name = getInput('playerOne', true)
+    @name = getInput('playerOne')
   end
 
   def getNameTwo
-    @name = getInput('playerTwo', true)
+    @name = getInput('playerTwo')
   end
 
   def update(input)
