@@ -1,7 +1,7 @@
 class Board
   include Interface
 
-  attr_accessor :positions, :lines
+  attr_accessor :positions
 
   def initialize()
     @positions = [1, 2, 3, 4, 5, 6, 7, 8, 9]

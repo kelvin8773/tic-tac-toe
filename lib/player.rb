@@ -1,7 +1,8 @@
 class Player 
   include Interface
 
-  attr_accessor :name, :inputs, :char
+  attr_reader :char
+  attr_accessor :name, :inputs
 
   def initialize(name, inputs=[], char)
     @name = name
