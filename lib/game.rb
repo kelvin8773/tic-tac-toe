@@ -9,13 +9,10 @@ class Game
     end
 
     def initial
-        @player1.initial
-        @player1.getNameOne
-        @player2.initial
-        @player2.getNameTwo
+        [@player1, @player2].each {|player| player.initial}
         @board.initial
     end
-    
+
     def play
         getInput('welcome')
   
@@ -26,9 +23,9 @@ class Game
                 @status = "continue"               
                 @board.show
             end
-
+        
             [@player1, @player2].each do |player| 
-
+    
                 loop do
                     print "#{player.name}, "
                     

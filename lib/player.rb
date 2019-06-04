@@ -3,23 +3,17 @@ class Player
 
   attr_accessor :name, :inputs, :char
 
-  def initialize(name=nil, inputs=[], char)
+  def initialize(name, inputs=[], char)
     @name = name
     @inputs = inputs
     @char = char
   end
 
-  def initial
-    @name = ""
+  def initial  
+    if @name.start_with?('player')
+      @name = getInput('name')
+    end
     @inputs = []
-  end
-
-  def getNameOne
-    @name = getInput('playerOne')
-  end
-
-  def getNameTwo
-    @name = getInput('playerTwo')
   end
 
   def update(input)
