@@ -29,7 +29,7 @@ class Board
   end
 
   def taken?(input)
-    @positions[input-1] == "X" || @positions[input-1] == "O"
+    @positions[input-1] == "X".red || @positions[input-1] == "O".green
   end 
   
 end
