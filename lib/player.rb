@@ -10,14 +10,14 @@ class Player
     @char = char
   end
 
-  def initial  
+  def restartPlayer
     if @name.start_with?('player')
       @name = getInput('name')
     end
     @inputs = []
   end
 
-  def update(input)
+  def move(input)
     @inputs << input
   end
 

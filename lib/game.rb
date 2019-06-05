@@ -8,60 +8,62 @@ class Game
         @status = "initial"
     end
 
-    def initial
-        [@player1, @player2].each {|player| player.initial}
-        @board.initial
+    def restart
+        @player1.restartPlayer
+        @player2.restartPlayer
+        @board.restartBoard
     end
 
     def play
         getInput('welcome')
   
-        loop do
+        until gameFinish
 
             if @status == "initial"
-                self.initial
+                self.restart
                 @status = "continue"               
-                @board.show
+                show(@board.positions)
             end
+
+            checkInput(@player1)
+            hasWon(@player1)
+            checkInput(@player2)
+            hasWon(@player2)
+        end
         
-            [@player1, @player2].each do |player| 
-    
-                loop do
-                    print "#{player.name}, "
+    end
+
+    def checkInput(player)
+        print "#{player.name}, "
                     
-                    input = getInput('position')
+        input = getInput('position')
 
-                    if validNumber?(input)
-                        input = input.to_i
-                        if @board.taken?(input)
-                            getInput('taken') 
-                            next
-                        else
-                            player.update(input)
-                            @board.update(input, player.char)
-                            @board.show
-                            break
-                        end
-                    else   
-                        self.finish if input == "q"              
-                        getInput('valid')
-                    end    
-                    @board.show         
-                end
+        if validNumber?(input)
+            input = input.to_i
+        if @board.taken?(input)
+            getInput('taken') 
+        else
+            player.move(input)
+            @board.update(input, player.char)
+        end
+        else   
+            self.finish if input == "q"              
+            getInput('valid')
+        end    
+            show(@board.positions)         
+    end
 
-                if @board.win?(player.inputs) || @board.full?
-                    print "#{player.name}, "  
-                    getInput('full') if @board.full?
-                    getInput('win') if @board.win?(player.inputs)
-                    @board.show
-                   
-                    if self.playAgain
-                        break
-                    else
-                        self.finish
-                    end 
-                end
-            end  
+    def hasWon(player)
+        if @board.win?(player.inputs)
+            print "#{player.name}, "  
+            getInput('win')
+            show(@board.positions)  
+        end
+    end
+
+    def gameFinish
+        if @board.full?
+            playAgain
         end
     end
 
