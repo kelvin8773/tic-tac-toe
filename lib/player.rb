@@ -4,9 +4,9 @@ class Player
   attr_reader :char
   attr_accessor :name, :inputs
 
-  def initialize(name, inputs=[], char)
+  def initialize(name, char)
     @name = name
-    @inputs = inputs
+    @inputs = []
     @char = char
   end
 

@@ -44,6 +44,42 @@ module Interface
       regex.match?(input)
   end
 
+  def next_move(player)
+    loop do  
+        print "#{player.name}, "            
+        input = getInput('position')
+
+        if validNumber?(input)
+            input = input.to_i
+            if @board.taken?(input)
+                getInput('taken') 
+            else
+                player.move(input)
+                @board.update(input, player.char)
+                show(@board.positions)   
+                break
+            end
+        else   
+            finish if input == "q"              
+            getInput('valid')
+        end    
+        show(@board.positions)      
+    end    
+  end
+
+  def play_again?   
+    if getInput('play?')    
+        @status = "initial"
+        return true
+    end
+  end
+
+  def finish
+    getInput('finish')
+    sleep 1
+    exit
+  end
+
 end
 
   

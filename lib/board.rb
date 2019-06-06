@@ -21,7 +21,10 @@ class Board
   end
 
   def full?
-    @positions.all?{|x| x.instance_of?(String)}  
+    if @positions.all?{|x| x.instance_of?(String)}  
+      getInput('full') 
+      return true
+    end
   end
 
   def win?(inputs)
