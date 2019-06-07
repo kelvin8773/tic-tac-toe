@@ -6,13 +6,22 @@ require './lib/board'
 require './lib/player' 
 require './lib/game'
 
+include Interface
 
-player1 = Player.new("player1", "X".red)
-player2 = Player.new("player2", "O".green)
-board = Board.new
-game = Game.new(player1, player2, board)
+loop do
+  get_input('welcome')
 
-game.play
+  player1 = Player.new("player1", "X".red)
+  player2 = Player.new("player2", "O".green)
+  board = Board.new
+  game = Game.new(player1, player2, board)
+
+  if !game.play
+    get_input('finish')
+    break 
+  end
+  
+end
 
 
 

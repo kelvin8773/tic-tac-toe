@@ -9,7 +9,7 @@ module Interface
     puts ""
   end
 
-  def getInput(text)
+  def get_input(text, default="")
     texts ={
       'position' => "Please enter your position (1 - 9) or press 'q' to exit game: \n",
       'play?' => "Would you like to play again?(y/n)?\n" ,
@@ -19,7 +19,8 @@ module Interface
       'full' => "Game board is full!\n",
       'name' => "Please input your name for",
       'welcome' => "Welcome to the Tic-Tac-Toe Game, there will be 2 players to join this game! \n",
-      'finish' => "Thank you to play! \n",
+      'finish' => "Thanks for your time! \n",
+      'quit' => "Sorry to see you go, see you next time! \n"
     } 
 
     print texts[text] 
@@ -31,15 +32,20 @@ module Interface
       input = gets.chomp
       return input == "y"
     when 'name' 
-      print "(#{@name}):"
+      print "(#{default}):"
       return gets.chomp
+    when 'finish'
+      sleep 1
+      exit
+    when 'quit'
+      exit
     else
       return false
     end
 
   end
 
-  def validNumber?(input)
+  def valid_number?(input)
       regex = /^[1-9]$/
       regex.match?(input)
   end
@@ -47,12 +53,12 @@ module Interface
   def next_move(player)
     loop do  
         print "#{player.name}, "            
-        input = getInput('position')
+        input = get_input('position')
 
-        if validNumber?(input)
+        if valid_number?(input)
             input = input.to_i
             if @board.taken?(input)
-                getInput('taken') 
+                get_input('taken') 
             else
                 player.move(input)
                 @board.update(input, player.char)
@@ -60,30 +66,24 @@ module Interface
                 break
             end
         else   
-            finish if input == "q"              
-            getInput('valid')
+            get_input('quit') if input == "q"              
+            get_input('valid')
         end    
         show(@board.positions)      
     end    
   end
 
-  def winner_display(player, board)
-    print "#{player.name}, "  
-    getInput('win')
-    show(board.positions)
-    end
+  def winner_display(name, positions)
+    print "#{name}, "  
+    get_input('win')
+    show(positions)
+  end
 
   def play_again?   
-    if getInput('play?')    
+    if get_input('play?')    
         @status = "initial"
         return true
     end
-  end
-
-  def finish
-    getInput('finish')
-    sleep 1
-    exit
   end
 
 end
