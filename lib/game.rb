@@ -33,17 +33,7 @@ class Game
     end
   
     def game_finish?
-       has_won?(@player1)|| has_won?(@player2) || @board.full?
+       @board.win?(@player1.inputs)|| @board.win?(@player2.inputs) || @board.full?
     end
-
-    def has_won?(player)
-        if @board.win?(player.inputs)
-            print "#{player.name}, "  
-            getInput('win')
-            show(@board.positions)
-            return true  
-        end
-    end
-
 
 end 

@@ -67,6 +67,12 @@ module Interface
     end    
   end
 
+  def winner_display(player, board)
+    print "#{player.name}, "  
+    getInput('win')
+    show(board.positions)
+    end
+
   def play_again?   
     if getInput('play?')    
         @status = "initial"

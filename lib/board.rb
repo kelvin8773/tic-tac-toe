@@ -28,7 +28,7 @@ class Board
   end
 
   def win?(inputs)
-     @lines.any?{|x| x - inputs == []}  
+    @lines.any?{|x| x - inputs == []}
   end
 
   def taken?(input)
