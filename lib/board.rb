@@ -9,12 +9,10 @@ class Board
           [1,2,3],[4,5,6],[7,8,9],
           [1,4,7],[2,5,8],[3,6,9],
           [1,5,9],[3,5,7]
-         ]  
+         ]
+    show(@positions)
   end
 
-  def restartBoard
-    @positions = [1, 2, 3, 4, 5, 6, 7, 8, 9]
-  end
 
   def update(input, char)
     @positions[input-1] = char
@@ -22,13 +20,16 @@ class Board
 
   def full?
     if @positions.all?{|x| x.instance_of?(String)}  
-      getInput('full') 
+      get_input('full') 
       return true
     end
   end
 
-  def win?(inputs)
-     @lines.any?{|x| x - inputs == []}  
+  def win?(player, board)
+    if @lines.any?{|x| x - player.inputs == []}
+      winner_display(player.name, board.positions)
+      return true
+    end
   end
 
   def taken?(input)
