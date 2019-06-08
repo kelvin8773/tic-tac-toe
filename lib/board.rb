@@ -1,32 +1,39 @@
-class GameBoard
-    attr_accessor :positions
+class Board
+  include Interface
 
-    def initialize(positions)
-        @positions = positions
+  attr_accessor :positions
+
+  def initialize()
+    @positions = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+    @lines = [
+          [1,2,3],[4,5,6],[7,8,9],
+          [1,4,7],[2,5,8],[3,6,9],
+          [1,5,9],[3,5,7]
+         ]
+    show(@positions)
+  end
+
+
+  def update(input, char)
+    @positions[input-1] = char
+  end
+
+  def full?
+    if @positions.all?{|x| x.instance_of?(String)}  
+      get_input('full') 
+      return true
     end
+  end
 
-    def display(positions)
-        puts "\t  #{positions[6]} | #{positions[7]} | #{positions[8]}"
-        puts "\t ---|---|---"
-        puts "\t  #{positions[3]} | #{positions[4]} | #{positions[5]}"
-        puts "\t ---|---|---"
-        puts "\t  #{positions[0]} | #{positions[1]} | #{positions[2]}"
-        puts ""
+  def win?(player, board)
+    if @lines.any?{|x| x - player.inputs == []}
+      winner_display(player.name, board.positions)
+      return true
     end
+  end
 
-     def fill_board(pos, char)
-        @positions[pos] = char
-    end
-
-    def if_full?
-        @positions[0..8].all?{|x| x.instance_of?(String)}
-    end
-
-     def is_fulled?(num)
-        @positions[num] == "X" || "O" == @positions[num]
-    end
-
+  def taken?(input)
+    @positions[input-1] == "X".red || @positions[input-1] == "O".green
+  end 
+  
 end
-
-   
-
