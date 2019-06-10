@@ -11,7 +11,6 @@ class Board
           [1,4,7],[2,5,8],[3,6,9],
           [1,5,9],[3,5,7]
          ]
-    show(@positions)
   end
 
 
@@ -20,19 +19,11 @@ class Board
   end
 
   def full?
-    if @positions.all?{|x| x.instance_of?(String)}  
-      get_input('full') 
-      return true
-    end
-    return false
+    @positions.all?{|x| x.instance_of?(String)}     
   end
 
   def win?(player, board)
-    if board.lines.any?{|x| x - player.inputs == []}
-      winner_display(player.name, board.positions)
-      return true
-    end
-    return false
+     board.lines.any?{|x| x - player.inputs == []} 
   end
 
   def taken?(input)

@@ -8,6 +8,7 @@ class Game
     end
 
     def play
+        show(@board.positions)
         until game_finish? 
             game_finish? ? break : next_move(@player1)
             game_finish? ? break : next_move(@player2)
@@ -18,7 +19,16 @@ class Game
     private
   
     def game_finish?
-       @board.win?(@player1, @board)|| @board.win?(@player2, @board) || @board.full?
+       if @board.win?(@player1, @board)
+        winner_display(@player1.name, board.positions)
+         return true
+       elsif @board.win?(@player2, @board) 
+        winner_display(@player2.name, board.positions)
+            return true
+       elsif @board.full?
+        get_input('full') 
+        return true
+       end
     end
 
 end 

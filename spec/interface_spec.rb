@@ -9,27 +9,27 @@ RSpec.describe Interface do
 
     include Interface
     
-    describe "#get_input" do
-        it "Display text when game is finished" do
-            expect(get_input('finish')).to output("Thanks for your time! \n")
-        end
+    # describe "#get_input" do
+    #     # it "Display text when game is finished" do
+    #     #     expect(get_input('finish')).to output("Thanks for your time! \n")
+    #     # end
 
-        it "Display text when you have to enter position" do
-            expect(get_input('position')).to eql(gets.chomp)
-        end
+    #     # it "Display text when you have to enter position" do
+    #     #     expect(get_input('position')).to eql(gets.chomp)
+    #     # end
 
-        it "Display text when you quit game" do
-            expect(get_input('quit')).to output("Sorry to see you go, see you next time! \n")
-        end
-    end
+    #     # it "Display text when you quit game" do
+    #     #     expect(get_input('quit')).to output("Sorry to see you go, see you next time! \n")
+    #     # end
+    # end
     
     describe "#valid_number?" do
-        it "If input a valid number" do
-            expect(valid_number?(22)).to eql(true)
+        it "return false if input is not a valid number" do
+            expect(valid_number?('22')).to be false
         end
 
-        it "If input is valid" do
-            expect(valid_number?(1)).to be true
+        it "return true if it is a valid number" do
+            expect(valid_number?('1')).to be true
         end
     end
 
