@@ -26,6 +26,11 @@ RSpec.describe Interface do
         end
     end
 
-    
+    describe "#play_again?" do
+        it "return true if play_again? is equal to 'y' " do
+            expect(play_again?).to be true
+        end
+
+    end
 
 end
