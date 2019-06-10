@@ -1,10 +1,11 @@
 class Board
   include Interface
 
+  attr_reader :lines
   attr_accessor :positions
 
-  def initialize()
-    @positions = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+  def initialize(positions)
+    @positions = positions
     @lines = [
           [1,2,3],[4,5,6],[7,8,9],
           [1,4,7],[2,5,8],[3,6,9],
@@ -23,13 +24,15 @@ class Board
       get_input('full') 
       return true
     end
+    return false
   end
 
   def win?(player, board)
-    if @lines.any?{|x| x - player.inputs == []}
+    if board.lines.any?{|x| x - player.inputs == []}
       winner_display(player.name, board.positions)
       return true
     end
+    return false
   end
 
   def taken?(input)
