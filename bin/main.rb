@@ -9,7 +9,7 @@ require './lib/game'
 include Interface
 
 loop do
-  get_input('welcome')
+  show_text('welcome')
 
   player1 = Player.new(get_input('name', 'player1'), "X".red)
   player2 = Player.new(get_input('name', 'player2'), "O".green)
@@ -17,7 +17,7 @@ loop do
   game = Game.new(player1, player2, board)
 
   if !game.play
-    get_input('finish')
+    show_text('finish')
     break 
   end
   

@@ -20,13 +20,13 @@ class Game
   
     def game_finish?
        if @board.win?(@player1, @board)
-        winner_display(@player1.name, board.positions)
+        winner_display(@player1.name, @board.positions)
          return true
        elsif @board.win?(@player2, @board) 
-        winner_display(@player2.name, board.positions)
-            return true
+        winner_display(@player2.name, @board.positions)
+        return true
        elsif @board.full?
-        get_input('full') 
+        show_text('full') 
         return true
        end
     end

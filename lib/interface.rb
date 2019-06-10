@@ -9,7 +9,7 @@ module Interface
     puts ""
   end
 
-  def get_input(text, default="")
+  def show_text(text)
     texts ={
       'position' => "Please enter your position (1 - 9) or press 'q' to exit game: \n",
       'play?' => "Would you like to play again?(y/n)?\n" ,
@@ -22,9 +22,11 @@ module Interface
       'finish' => "Thanks for your time! \n",
       'quit' => "Sorry to see you go, see you next time! \n"
     } 
-
     print texts[text] 
-    
+  end
+
+  def get_input(text, default="")
+    show_text(text)  
     case text
     when 'position'
       return gets.chomp
@@ -33,16 +35,10 @@ module Interface
       return input == "y"
     when 'name' 
       print "(#{default}):"
-      return gets.chomp
-    when 'finish'
-      sleep 1
-      exit
-    when 'quit'
-      exit
+      return gets.chomp 
     else
       return false
     end
-
   end
 
   def valid_number?(input)
@@ -58,7 +54,7 @@ module Interface
         if valid_number?(input)
             input = input.to_i
             if @board.taken?(input)
-                get_input('taken') 
+                show_text('taken') 
             else
                 player.move(input)
                 @board.update(input, player.char)
@@ -66,8 +62,11 @@ module Interface
                 break
             end
         else   
-            get_input('quit') if input == "q"              
-            get_input('valid')
+          if input == "q"              
+            show_text('quit')
+            exit
+          end   
+            show_text('valid')
         end    
         show(@board.positions)      
     end    
@@ -75,7 +74,7 @@ module Interface
 
   def winner_display(name, positions)
     print "#{name}, "  
-    get_input('win')
+    show_text('win')
     show(positions)
   end
 
