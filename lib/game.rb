@@ -1,6 +1,8 @@
 class Game
     include Interface
 
+    attr_accessor :player1, :player2, :board
+
     def initialize(player1, player2, board)
         @player1 = player1
         @player2 = player2
@@ -9,23 +11,23 @@ class Game
 
     def play
         show(@board.positions)
-        until game_finish? 
+        loop do
             game_finish? ? break : next_move(@player1)
             game_finish? ? break : next_move(@player2)
         end 
-        return play_again?
+        return get_input('play?')
     end
 
-    private
+    # private
   
-    def game_finish?
-       if @board.win?(@player1, @board)
-        winner_display(@player1.name, @board.positions)
+    def game_finish?(player1=@player1, player2=@player2, board=@board)
+       if board.win?(player1.inputs)
+        winner_display(player1.name, board.positions)
          return true
-       elsif @board.win?(@player2, @board) 
-        winner_display(@player2.name, @board.positions)
+       elsif board.win?(player2.inputs) 
+        winner_display(player2.name, board.positions)
         return true
-       elsif @board.full?
+       elsif board.full?
         show_text('full') 
         return true
        end

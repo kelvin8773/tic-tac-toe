@@ -24,13 +24,6 @@ RSpec.describe Interface do
         it "return true if it is a valid number" do
             expect(valid_number?('1')).to be true
         end
-    end
-
-    describe "#play_again?" do
-        it "return true if play_again? is equal to 'y' " do
-            expect(play_again?).to be true
-        end
-
-    end
+    end    
 
 end

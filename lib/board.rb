@@ -22,12 +22,12 @@ class Board
     @positions.all?{|x| x.instance_of?(String)}     
   end
 
-  def win?(player, board)
-     board.lines.any?{|x| x - player.inputs == []} 
+  def win?(inputs, lines = self.lines)
+     lines.any?{|x| x - inputs == []} 
   end
 
-  def taken?(input)
-    @positions[input-1] == "X".red || @positions[input-1] == "O".green
+  def taken?(input, positions=@positions)
+    positions[input-1] == "X".red || positions[input-1] == "O".green
   end 
   
 end

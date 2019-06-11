@@ -26,13 +26,13 @@ RSpec.describe Board do
     it "return true if player win" do
       player1 = double('player')      
       allow(player1).to receive(:inputs) {[2,5,4,8]}     
-      expect(board.win?(player1, board)).to be true
+      expect(board.win?(player1.inputs)).to be true
     end
     
     it "return false if player is not winning" do
       player2 = double('player')
       allow(player2).to receive(:inputs) {[2,5,9]}
-      expect(board.win?(player2, board)).to be false
+      expect(board.win?(player2.inputs)).to be false
     end 
   end
   

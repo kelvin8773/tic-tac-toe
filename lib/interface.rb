@@ -27,17 +27,15 @@ module Interface
 
   def get_input(text, default="")
     show_text(text)  
+
     case text
-    when 'position'
-      return gets.chomp
-    when 'play?'
-      input = gets.chomp
-      return input == "y"
-    when 'name' 
-      print "(#{default}):"
-      return gets.chomp 
-    else
-      return false
+      when 'play?'
+        return gets.chomp == "y"
+      when 'name' 
+        print "(#{default}):"
+        return gets.chomp 
+      else
+        return gets.chomp
     end
   end
 
@@ -46,31 +44,35 @@ module Interface
       regex.match?(input)
   end
 
-  def next_move(player)
+
+  def next_move(player, board=@board)
     loop do  
         print "#{player.name}, "            
-        input = get_input('position')
+        show_text('position')
+        input = gets.chomp
 
         if valid_number?(input)
             input = input.to_i
-            if @board.taken?(input)
+            if board.taken?(input)
                 show_text('taken') 
             else
                 player.move(input)
-                @board.update(input, player.char)
-                show(@board.positions)   
+                board.update(input, player.char)
+                show(board.positions)   
                 break
             end
         else   
           if input == "q"              
             show_text('quit')
             exit
-          end   
-            show_text('valid')
+          end 
+           show_text('valid')
         end    
-        show(@board.positions)      
+        show(board.positions)      
     end    
   end
+
+
 
   def winner_display(name, positions)
     print "#{name}, "  
@@ -78,12 +80,7 @@ module Interface
     show(positions)
   end
 
-  def play_again?   
-    if get_input('play?')    
-        @status = "initial"
-        return true
-    end
-  end
+  
 
 end
 
