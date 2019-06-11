@@ -9,7 +9,7 @@ module Interface
     puts ""
   end
 
-  def get_input(text, default="")
+  def show_text(text)
     texts ={
       'position' => "Please enter your position (1 - 9) or press 'q' to exit game: \n",
       'play?' => "Would you like to play again?(y/n)?\n" ,
@@ -22,27 +22,21 @@ module Interface
       'finish' => "Thanks for your time! \n",
       'quit' => "Sorry to see you go, see you next time! \n"
     } 
-
     print texts[text] 
-    
-    case text
-    when 'position'
-      return gets.chomp
-    when 'play?'
-      input = gets.chomp
-      return input == "y"
-    when 'name' 
-      print "(#{default}):"
-      return gets.chomp
-    when 'finish'
-      sleep 1
-      exit
-    when 'quit'
-      exit
-    else
-      return false
-    end
+  end
 
+  def get_input(text, default="")
+    show_text(text)  
+
+    case text
+      when 'play?'
+        return gets.chomp == "y"
+      when 'name' 
+        print "(#{default}):"
+        return gets.chomp 
+      else
+        return gets.chomp
+    end
   end
 
   def valid_number?(input)
@@ -50,41 +44,43 @@ module Interface
       regex.match?(input)
   end
 
-  def next_move(player)
+
+  def next_move(player, board=@board)
     loop do  
         print "#{player.name}, "            
-        input = get_input('position')
+        show_text('position')
+        input = gets.chomp
 
         if valid_number?(input)
             input = input.to_i
-            if @board.taken?(input)
-                get_input('taken') 
+            if board.taken?(input)
+                show_text('taken') 
             else
                 player.move(input)
-                @board.update(input, player.char)
-                show(@board.positions)   
+                board.update(input, player.char)
+                show(board.positions)   
                 break
             end
         else   
-            get_input('quit') if input == "q"              
-            get_input('valid')
+          if input == "q"              
+            show_text('quit')
+            exit
+          end 
+           show_text('valid')
         end    
-        show(@board.positions)      
+        show(board.positions)      
     end    
   end
 
+
+
   def winner_display(name, positions)
     print "#{name}, "  
-    get_input('win')
+    show_text('win')
     show(positions)
   end
 
-  def play_again?   
-    if get_input('play?')    
-        @status = "initial"
-        return true
-    end
-  end
+  
 
 end
 
