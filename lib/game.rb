@@ -2,27 +2,24 @@ require "./lib/interface"
 
 class Game
     include Interface
-
     attr_accessor :player1, :player2, :board
 
     def initialize(player1, player2, board)
         @player1 = player1
         @player2 = player2
         @board = board
-        show(board.positions)
     end
     
     def play
+        show(board.positions)
         loop do        
-             next_move(player1) ? game_finish? ? break : 'next' : (return false)
-             next_move(player2) ? game_finish? ? break : 'next' : (return false)                         
+            next_move(player1) ? game_finish? ? break : 'next' : (return false)
+            next_move(player2) ? game_finish? ? break : 'next' : (return false)        
         end    
-         return get_input('play?') == 'y' 
-      
+        return get_input('play?') == 'y'    
     end
 
     # private
-  
     def game_finish?
         board.full? ? (show_text('full');  true) : check_win?(player1) || check_win?(player2) 
     end

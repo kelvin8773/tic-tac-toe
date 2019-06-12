@@ -17,6 +17,9 @@ RSpec.describe Game do
 
       allow(player1).to receive(:inputs) {[2,5,8]}
       allow(player2).to receive(:inputs) {[3,6,7]}
+
+      # allow(board).to receive(:positions){[1,'X',3,4,'X',6,7,'X',9]}
+      allow(board).to receive(:full?){false}
       allow(board).to receive(:win?){true}
       
       game = Game.new(player1,player2,board)
@@ -24,7 +27,7 @@ RSpec.describe Game do
       # game.player1.move(5)
       # game.player1.move(8)
            
-      expect(game.game_finish?(player1, player2, board)).to be true
+      expect(game.game_finish?).to be true
     end
 
     # it "return false if player2 not win" do
