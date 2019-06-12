@@ -5,49 +5,40 @@ require "./lib/player"
 require "./lib/board"
 
 RSpec.describe Game do
-    # let (:player1) { Player.new('Kelvin', 'X'.red)}
-    # let (:player2) { Player.new('Denis', 'O'.green)}
-    # let (:board) { Board.new }
+    let (:player1) { Player.new('Kelvin', 'X'.red)}
+    let (:player2) { Player.new('Denis', 'O'.green)}
+    let (:board) { Board.new }
+    let (:game) {Game.new(player1,player2,board)}
   
   describe "#game_finish?" do
-    it "return true if player1 win" do
-      player1 = double('Player')
-      player2 = double('Player')
-      board = double('Board')
 
-      allow(player1).to receive(:inputs) {[2,5,8]}
-      allow(player2).to receive(:inputs) {[3,6,7]}
-
-      # allow(board).to receive(:positions){[1,'X',3,4,'X',6,7,'X',9]}
-      allow(board).to receive(:full?){false}
-      allow(board).to receive(:win?){true}
-      
-      game = Game.new(player1,player2,board)
-      # game.player1.move(2)
-      # game.player1.move(5)
-      # game.player1.move(8)
+    it "return true when board is full" do
+      allow(board).to receive(:full?){true}
            
       expect(game.game_finish?).to be true
     end
+  end
 
-    # it "return false if player2 not win" do
-    #   game = Game.new(player1,player2,board)
-    #   game.player2.move(3)
-    #   game.player2.move(6)
-    #   game.player2.move(7)
-           
-    #   expect(game.game_finish?).to be_falsey
-    # end
+  describe "#check_win?" do
+      it "return true if player1 win" do
+      allow(player1).to receive(:inputs) {[1,2,3]}
+      allow(player2).to receive(:inputs) {[4,7,8]}
 
-    # it "return true if board is full" do
-    #   game = Game.new(player1,player2,board)
-    #   game.board.positions = ['x', 'z', 'o', 'x', 'x', 'x', 'w', 'e', 'f']
-           
-    #   expect(game.game_finish?).to be_truthy
-    # end
+      allow(board).to receive(:full?){false}
+      allow(board).to receive(:win?){true}
 
+      expect(game.check_win?(player1)).to be true
+    end
 
+      it "return true if player2 win" do
+      allow(player1).to receive(:inputs) {[4,7,8]}
+      allow(player2).to receive(:inputs) {[1,2,3]}
 
+      allow(board).to receive(:full?){false}
+      allow(board).to receive(:win?){true}
+
+      expect(game.check_win?(player2)).to be true
+    end
   end
 
 end
