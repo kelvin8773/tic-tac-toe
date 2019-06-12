@@ -1,4 +1,3 @@
-require "./lib/interface"
 require "./lib/player"
 
 RSpec.describe Player do  

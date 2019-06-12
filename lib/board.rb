@@ -1,18 +1,16 @@
 require './lib/interface'
 
 class Board
-  include Interface
+  INITIAL_BOARD = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+  WIN_LINES = [ [1,2,3],[4,5,6],[7,8,9],
+                [1,4,7],[2,5,8],[3,6,9],
+                [1,5,9],[3,5,7] ]
 
-  attr_reader :lines
+  include Interface
   attr_accessor :positions
 
-  def initialize(positions)
-    @positions = positions
-    @lines = [
-          [1,2,3],[4,5,6],[7,8,9],
-          [1,4,7],[2,5,8],[3,6,9],
-          [1,5,9],[3,5,7]
-         ]
+  def initialize()
+    @positions = INITIAL_BOARD  
   end
 
 
@@ -22,15 +20,15 @@ class Board
   end
 
   def full?
-    @positions.all?{|x| x.instance_of?(String)}     
+    @positions.all?{|x| x.instance_of?(String)}   
   end
 
-  def win?(inputs, lines = self.lines)
-     lines.any?{|x| x - inputs == []} 
+  def win?(inputs)
+    WIN_LINES.any?{|x| x - inputs == []} 
   end
 
   def taken?(input, positions=@positions)
-    positions[input-1] == "X".red || positions[input-1] == "O".green
+    positions[input-1].is_a? String
   end 
   
 end

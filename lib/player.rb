@@ -1,3 +1,5 @@
+require "./lib/interface"
+
 class Player 
   include Interface
 

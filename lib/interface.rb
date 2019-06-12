@@ -7,6 +7,7 @@ module Interface
     puts "\t ---|---|---"
     puts "\t  #{positions[0]} | #{positions[1]} | #{positions[2]}"
     puts ""
+
   end
 
   def show_text(text)
@@ -17,7 +18,8 @@ module Interface
       'invalid' => "Please enter an valid number, thanks! \n",
       'win' => "congrate! You won!\n",
       'full' => "Game board is full!\n",
-      'name' => "Please input your name for",
+      'player1' => "Please input your name for #{text}: \n",
+      'player2' => "Please input your name for #{text}: \n",
       'welcome' => "Welcome to the Tic-Tac-Toe Game, there will be 2 players to join this game! \n",
       'finish' => "Thanks for your time! \n",
       'quit' => "Sorry to see you go, see you next time! \n"
@@ -26,17 +28,9 @@ module Interface
     return text
   end
 
-  def get_input(text, default="")
+  def get_input(text)
     show_text(text)  
-    case text
-      when 'play?'
-        return gets.chomp == "y"
-      when 'name' 
-        print "(#{default}):"
-        return gets.chomp 
-      else
-        return gets.chomp
-    end
+    return gets.chomp
   end
 
   def valid_number?(input)

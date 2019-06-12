@@ -1,21 +1,24 @@
 class Game
     include Interface
 
+    attr_reader :quit
     attr_accessor :player1, :player2, :board
 
     def initialize(player1, player2, board)
         @player1 = player1
         @player2 = player2
         @board = board
+        @quit = false
     end
 
     def play
         show(@board.positions)
         loop do
+        
             game_finish? ? break : next_move(@player1) ?  'next' : break
             game_finish? ? break : next_move(@player2) ?  'next' : break
         end 
-        return get_input('play?')
+        return get_input('play?') == 'y'
     end
 
     # private
@@ -34,7 +37,7 @@ class Game
     end
 
     def next_move(player)
-        loop do
+     loop do
         input = get_next_move(player.name)
         case input
         when 'invalid'
@@ -45,7 +48,7 @@ class Game
             return true if update_input(input, player, @board)
             next
         end
-        end
+     end
     end
 
 end 

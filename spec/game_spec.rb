@@ -8,7 +8,7 @@ require "./lib/board"
 RSpec.describe Game do
     let (:player1) { Player.new('Kelvin', 'X'.red)}
     let (:player2) { Player.new('Denis', 'O'.green)}
-    let (:board) { Board.new([1, 2, 3, 4, 5, 6, 7, 8, 9])}
+    let (:board) { Board.new }
   
   describe "#game_finish?" do
     it "return true if player1 win" do

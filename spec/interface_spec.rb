@@ -2,7 +2,6 @@ require "./lib/interface"
 
 RSpec.describe Interface do
     include Interface
-    
     describe '#show_text' do
         it "return welcome messages" do 
             expect{show_text('welcome')}.to output("Welcome to the Tic-Tac-Toe Game, there will be 2 players to join this game! \n").to_stdout
@@ -27,18 +26,17 @@ RSpec.describe Interface do
     
     describe "#get_input" do
 
-        it "return true if input y to play again" do
+        it "show text to ask whether to play again" do
         allow_any_instance_of(Kernel).to receive(:gets).and_return('y')
         
-        expect(get_input('play?')).to be true
+        expect{get_input('play?')}.to output("Would you like to play again?(y/n)?\n").to_stdout
         end
 
         it "return name if required put in name" do
         allow_any_instance_of(Kernel).to receive(:gets).and_return('Denis')
-
-        expect(get_input('name', 'player1')).to eql('Denis')
+        
+        expect(get_input('player1')).to eql('Denis') 
         end
-
     end
 
     describe "#get_next_move" do    
@@ -71,10 +69,12 @@ RSpec.describe Interface do
 
         it "return true if success update" do
             board = double('Board')
-            player = double ('Player')
+            player = double('Player')
+            input = '2'
             allow(board).to receive(:taken?) {false}
             allow(player).to receive(:move) {"2"}
-            allow(board).to receive(:update) {["2", "X"]}
+            allow(player).to receive(:char) {"X"}
+            allow(board).to receive(:update) {[input, player.char]}
 
             expect(update_input('2', player, board)).to be true
         end
