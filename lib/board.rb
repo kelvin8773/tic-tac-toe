@@ -1,7 +1,6 @@
 require './lib/interface'
 
 class Board
-  INITIAL_BOARD = [1, 2, 3, 4, 5, 6, 7, 8, 9]
   WIN_LINES = [ [1,2,3],[4,5,6],[7,8,9],
                 [1,4,7],[2,5,8],[3,6,9],
                 [1,5,9],[3,5,7] ]
@@ -10,7 +9,7 @@ class Board
   attr_accessor :positions
 
   def initialize()
-    @positions = INITIAL_BOARD  
+    @positions = [1, 2, 3, 4, 5, 6, 7, 8, 9] 
   end
 
 

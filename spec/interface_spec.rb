@@ -62,7 +62,7 @@ RSpec.describe Interface do
 
         it "return false if not success update" do
             board = double('Board')
-            player = double ('Player')
+            player = double('Player')
             allow(board).to receive(:taken?) {true}
             expect(update_input('2', player, board)).to be false
         end

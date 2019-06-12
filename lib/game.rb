@@ -1,39 +1,34 @@
+require "./lib/interface"
+
 class Game
     include Interface
 
-    attr_reader :quit
     attr_accessor :player1, :player2, :board
 
     def initialize(player1, player2, board)
         @player1 = player1
         @player2 = player2
         @board = board
-        @quit = false
+        show(board.positions)
     end
-
+    
     def play
-        show(@board.positions)
-        loop do
-        
-            game_finish? ? break : next_move(@player1) ?  'next' : break
-            game_finish? ? break : next_move(@player2) ?  'next' : break
-        end 
-        return get_input('play?') == 'y'
+        loop do        
+             next_move(player1) ? game_finish? ? break : 'next' : (return false)
+             next_move(player2) ? game_finish? ? break : 'next' : (return false)                         
+        end    
+         return get_input('play?') == 'y' 
+      
     end
 
     # private
   
-    def game_finish?(player1=@player1, player2=@player2, board=@board)
-       if board.win?(player1.inputs)
-        winner_display(player1.name, board.positions)
-         return true
-       elsif board.win?(player2.inputs) 
-        winner_display(player2.name, board.positions)
-        return true
-       elsif board.full?
-        show_text('full') 
-        return true
-       end
+    def game_finish?
+        board.full? ? (show_text('full');  true) : check_win?(player1) || check_win?(player2) 
+    end
+
+    def check_win?(player)
+        board.win?(player.inputs) ? ( print "#{player.name}"; show_text('win');  true) : false
     end
 
     def next_move(player)
@@ -45,7 +40,7 @@ class Game
         when "quit"
             return false
         else
-            return true if update_input(input, player, @board)
+            return true if update_input(input, player, board)
             next
         end
      end

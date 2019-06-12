@@ -16,7 +16,7 @@ module Interface
       'play?' => "Would you like to play again?(y/n)?\n" ,
       'taken' => "Try again, that spot has been taken already.\n" ,
       'invalid' => "Please enter an valid number, thanks! \n",
-      'win' => "congrate! You won!\n",
+      'win' => " ,congrate! You won!\n",
       'full' => "Game board is full!\n",
       'player1' => "Please input your name for #{text}: \n",
       'player2' => "Please input your name for #{text}: \n",
@@ -60,12 +60,6 @@ module Interface
     end
   end
 
-
-  def winner_display(name, positions)
-    print "#{name}, "  
-    show_text('win')
-    show(positions)
-  end
 end
 
   

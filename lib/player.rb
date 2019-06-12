@@ -1,7 +1,4 @@
-require "./lib/interface"
-
 class Player 
-  include Interface
 
   attr_reader :char
   attr_accessor :name, :inputs
