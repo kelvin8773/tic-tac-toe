@@ -12,8 +12,8 @@ class Game
     def play
         show(@board.positions)
         loop do
-            game_finish? ? break : next_move(@player1)
-            game_finish? ? break : next_move(@player2)
+            game_finish? ? break : next_move(@player1) ?  'next' : break
+            game_finish? ? break : next_move(@player2) ?  'next' : break
         end 
         return get_input('play?')
     end
@@ -31,6 +31,21 @@ class Game
         show_text('full') 
         return true
        end
+    end
+
+    def next_move(player)
+        loop do
+        input = get_next_move(player.name)
+        case input
+        when 'invalid'
+            next
+        when "quit"
+            return false
+        else
+            return true if update_input(input, player, @board)
+            next
+        end
+        end
     end
 
 end 

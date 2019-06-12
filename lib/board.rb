@@ -1,3 +1,5 @@
+require './lib/interface'
+
 class Board
   include Interface
 
@@ -16,6 +18,7 @@ class Board
 
   def update(input, char)
     @positions[input-1] = char
+    show(@positions)
   end
 
   def full?

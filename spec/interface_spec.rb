@@ -1,7 +1,6 @@
 require "./lib/interface"
 
 RSpec.describe Interface do
-
     include Interface
     
     describe '#show_text' do
@@ -24,6 +23,62 @@ RSpec.describe Interface do
         it "return true if it is a valid number" do
             expect(valid_number?('1')).to be true
         end
-    end    
+    end 
+    
+    describe "#get_input" do
+
+        it "return true if input y to play again" do
+        allow_any_instance_of(Kernel).to receive(:gets).and_return('y')
+        
+        expect(get_input('play?')).to be true
+        end
+
+        it "return name if required put in name" do
+        allow_any_instance_of(Kernel).to receive(:gets).and_return('Denis')
+
+        expect(get_input('name', 'player1')).to eql('Denis')
+        end
+
+    end
+
+    describe "#get_next_move" do    
+        it "return 'quit' if input is 'q'" do
+        allow_any_instance_of(Kernel).to receive(:gets).and_return('q')
+
+        expect(get_next_move('Player')).to eql('quit')
+        end
+
+        it "return 'invalid' if input is not '1 ~ 9'" do 
+        allow_any_instance_of(Kernel).to receive(:gets).and_return('12')
+        expect(get_next_move('Player')).to eql('invalid')
+        end
+
+        it "return '1 ~ 9' if input is '1 ~ 9'" do 
+        allow_any_instance_of(Kernel).to receive(:gets).and_return('8')
+        
+        expect(get_next_move('Player')).to eql('8')
+        end
+    end
+
+    describe "#update_input" do
+
+        it "return false if not success update" do
+            board = double('Board')
+            player = double ('Player')
+            allow(board).to receive(:taken?) {true}
+            expect(update_input('2', player, board)).to be false
+        end
+
+        it "return true if success update" do
+            board = double('Board')
+            player = double ('Player')
+            allow(board).to receive(:taken?) {false}
+            allow(player).to receive(:move) {"2"}
+            allow(board).to receive(:update) {["2", "X"]}
+
+            expect(update_input('2', player, board)).to be true
+        end
+
+    end
 
 end
