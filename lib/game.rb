@@ -19,7 +19,7 @@ class Game
         return get_input('play?') == 'y'    
     end
 
-    # private
+    private
     def game_finish?
         board.full? ? (show_text('full');  true) : check_win?(player1) || check_win?(player2) 
     end

@@ -29,5 +29,6 @@ class Board
   def taken?(input, positions=@positions)
     positions[input-1].is_a? String
   end 
+
   
 end
