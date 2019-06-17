@@ -1,42 +1,93 @@
-require 'colorize'  # Need to run 'gem install colorize'
-
 require "./lib/game"
-require "./lib/interface"
-require "./lib/player"
-require "./lib/board"
 
 RSpec.describe Game do
-    let (:player1) { Player.new('Kelvin', 'X'.red)}
-    let (:player2) { Player.new('Denis', 'O'.green)}
-    let (:board) { Board.new([1, 2, 3, 4, 5, 6, 7, 8, 9])}
   
   describe "#game_finish?" do
-    it "return true if player1 win" do
-      game = Game.new(player1,player2,board)
-      game.player1.move(2)
-      game.player1.move(5)
-      game.player1.move(8)
-           
-      expect(game.game_finish?).to be true
+    
+    it "return true when board is full" do
+      player1 = double("Player")
+      player2 = double("Player")
+      board = double("Board")
+      game = Game.new(player1, player2, board)
+      
+      allow(board).to receive(:full?){true} 
+
+      expect(game.send(:game_finish?)).to be true
+
+    end
+    
+    it "return true if any player win" do
+      player1 = double("Player")
+      player2 = double("Player")
+      board = double("Board")
+      game = Game.new(player1, player2, board)
+      allow(board).to receive(:full?){false} 
+      allow(game).to receive(:check_win?){true}
+
+      expect(game.send(:game_finish?)).to be true
+    end
+  end
+
+  describe "#check_win?" do
+      it "return true and print out win if player1 win" do   
+        player1 = double('Player')
+        player2 = double('Player')
+        board = double('Board')
+        game = Game.new(player1, player2, board)
+
+        allow(player1).to receive(:inputs) {[1,2,3]}
+        allow(player1).to receive(:name) {'player1'} 
+        allow(board).to receive(:win?){true}
+
+        expect{game.send(:check_win?,player1)}.to output("player1, congrate! You won!\n").to_stdout
+
+        expect(game.send(:check_win?,player1)).to be true
     end
 
-    it "return false if player2 not win" do
-      game = Game.new(player1,player2,board)
-      game.player2.move(3)
-      game.player2.move(6)
-      game.player2.move(7)
-           
-      expect(game.game_finish?).to be_falsey
+
+    it "return false if player2 not win" do   
+      player1 = double('Player')
+      player2 = double('Player')
+      board = double('Board')
+      game = Game.new(player1, player2, board)
+
+      allow(player2).to receive(:inputs) {[8,5,4]}
+      allow(player2).to receive(:name) {'player2'} 
+      allow(board).to receive(:win?){false}
+
+      expect(game.send(:check_win?,player2)).to be false
+    end  
+  end
+
+  describe "#next_move" do
+    it "return false if input return is 'quit' " do
+        player1 = double('Player')
+        player2 = double('Player')
+        board = double('Board')
+        game = Game.new(player1, player2, board)
+
+        allow(player1).to receive(:name) {"player1"}
+
+        allow(game).to receive(:get_next_move).and_return('quit')
+                
+        expect(game.send(:next_move, player1)).to be false
     end
 
-    it "return true if board is full" do
-      game = Game.new(player1,player2,board)
-      game.board.positions = ['x', 'z', 'o', 'x', 'x', 'x', 'w', 'e', 'f']
-           
-      expect(game.game_finish?).to be_truthy
+    it "loop until get correct input and return true " do
+      player1 = double('Player')
+      player2 = double('Player')
+      board = double('Board')
+      game = Game.new(player1, player2, board)
+
+      allow(player1).to receive(:name) {"player1"}
+
+      allow(game).to receive(:update_input){true}
+
+      allow(game).to receive(:get_next_move).and_return('invalid', 'invalid', '9')
+
+      expect(game.send(:next_move, player1)).to be true
+    
     end
-
-
 
   end
 
